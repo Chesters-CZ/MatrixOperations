@@ -27,7 +27,27 @@ public class Matrix implements IMatrix {
 
     @Override
     public IMatrix times(IMatrix matrix) {
-        throw new NotImplementedError(); // TODO:
+        Matrix returned = null;
+        double disposable;
+        for (int m = 0; m < getRows(); m++) {
+            double[] horniNasobci = new double[getColumns()];
+            for (int i = 0; i < getColumns(); i++) {
+                horniNasobci[i] = get(m, i);
+            }
+            for (int needstohappen = 0; needstohappen < matrix.getColumns(); needstohappen++) {
+                double[] levyNasobci = new double[matrix.getRows()];
+                for (int i = 0; i < matrix.getRows(); i++) {
+                    levyNasobci[i] = get(i, needstohappen);
+                }
+
+                disposable = 0;
+                for (int n = 0; n < horniNasobci.length; n++) {
+                    disposable = disposable + horniNasobci[n] * levyNasobci[n];
+                }
+                returned[m][needstohappen] = disposable;
+            }
+        }
+        return returned; // TODO:
     }
 
     @Override
@@ -42,7 +62,7 @@ public class Matrix implements IMatrix {
 
     @Override
     public double get(int n, int m) {
-        throw new NotImplementedError(); // TODO:
+        return rawArray[m][n]; // TODO:
     }
 
     //region Optional
@@ -55,6 +75,7 @@ public class Matrix implements IMatrix {
     public double determinant() {
         return 0;
     }
+
     //endregion
     //region Generated
     @Override
@@ -64,7 +85,7 @@ public class Matrix implements IMatrix {
         Matrix matrix = (Matrix) o;
 
         for (int i = 0; i < rawArray.length; i++) {
-            if(!Arrays.equals(rawArray[i], matrix.rawArray[i]))
+            if (!Arrays.equals(rawArray[i], matrix.rawArray[i]))
                 return false;
         }
         return true;
